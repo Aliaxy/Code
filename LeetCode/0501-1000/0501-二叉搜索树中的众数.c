@@ -1,0 +1,59 @@
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     struct TreeNode *left;
+ *     struct TreeNode *right;
+ * };
+ */
+
+/**
+ * Note: The returned array must be malloced, assume caller calls free().
+ */
+int *answer;
+int answerSize;
+int base, count, maxCount;
+
+void update(int x)
+{
+    if (x == base)
+    {
+        ++count;
+    }
+    else
+    {
+        count = 1;
+        base = x;
+    }
+    if (count == maxCount)
+    {
+        answer[answerSize++] = base;
+    }
+    if (count > maxCount)
+    {
+        maxCount = count;
+        answerSize = 0;
+        answer[answerSize++] = base;
+    }
+}
+
+void dfs(struct TreeNode *o)
+{
+    if (!o)
+    {
+        return;
+    }
+    dfs(o->left);
+    update(o->val);
+    dfs(o->right);
+}
+
+int *findMode(struct TreeNode *root, int *returnSize)
+{
+    base = count = maxCount = 0;
+    answer = malloc(sizeof(int) * 4001);
+    answerSize = 0;
+    dfs(root);
+    *returnSize = answerSize;
+    return answer;
+}
