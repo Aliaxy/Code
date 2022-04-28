@@ -4,11 +4,11 @@
 
 
 
-## Input Specification
+## Input
 
 
 
-## Output Specification
+## Output
 
 
 
